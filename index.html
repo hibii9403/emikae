@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#080a0f">
+<title>Nile — Egyptian Arabic for Medical Students</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   1. RESET & TOKENS
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --f-display:'Fraunces',Georgia,'Times New Roman',serif;
+  --f-ui:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-ar:'Cairo',system-ui,sans-serif;
+  --r-sm:10px;--r:16px;--r-lg:22px;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --spring:cubic-bezier(.34,1.56,.64,1);
+}
+html[data-theme="dark"]{
+  --bg:#080a0f;--bg2:#0b0e15;
+  --surface:#11151d;--surface2:#161b25;--surface3:#1d2431;
+  --line:rgba(255,255,255,.075);--line2:rgba(255,255,255,.14);
+  --text:#e9edf5;--muted:#8b93a7;--dim:#59617a;
+  --gold:#e0bb78;--teal:#4fd1c5;--violet:#a78bfa;--rose:#f9a8d4;--sky:#7dd3fc;
+  --shadow:0 30px 70px -30px rgba(0,0,0,.9);
+  --glass:rgba(17,21,29,.72);
+  --mesh1:rgba(79,209,197,.10);--mesh2:rgba(224,187,120,.09);--mesh3:rgba(167,139,250,.08);
+}
+html[data-theme="light"]{
+  --bg:#f7f3ec;--bg2:#efe9df;
+  --surface:#ffffff;--surface2:#fbf8f2;--surface3:#f2ecdf;
+  --line:rgba(32,27,20,.09);--line2:rgba(32,27,20,.17);
+  --text:#1b1916;--muted:#6d6457;--dim:#9c9385;
+  --gold:#b07f2f;--teal:#0e968a;--violet:#7455e8;--rose:#d1548b;--sky:#1f8fc4;
+  --shadow:0 30px 70px -34px rgba(70,58,35,.3);
+  --glass:rgba(255,255,255,.78);
+  --mesh1:rgba(14,150,138,.10);--mesh2:rgba(176,127,47,.10);--mesh3:rgba(116,85,232,.07);
+}
+html,body{height:100%}
+body{
+  font-family:var(--f-ui);background:var(--bg);color:var(--text);
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  overflow:hidden;
+  transition:background .5s var(--ease),color .4s var(--ease);
+  -webkit-tap-highlight-color:transparent;
+}
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(700px 500px at 12% -10%,var(--mesh1),transparent 70%),
+    radial-gradient(760px 560px at 92% 4%,var(--mesh2),transparent 72%),
+    radial-gradient(620px 520px at 55% 108%,var(--mesh3),transparent 70%);
+}
+::selection{background:color-mix(in srgb,var(--teal) 35%,transparent)}
+*{scrollbar-width:thin;scrollbar-color:var(--line2) transparent}
+::-webkit-scrollbar{width:8px;height:8px}
+::-webkit-scrollbar-thumb{background:var(--line2);border-radius:9px;border:2px solid transparent;background-clip:content-box}
+:focus-visible{outline:2px solid color-mix(in srgb,var(--teal) 80%,transparent);outline-offset:2px;border-radius:6px}
+button{font-family:inherit}
+
+/* ============================================================
+   2. SCREENS
+   ============================================================ */
+.screen{
+  position:fixed;inset:0;z-index:1;
+  transition:opacity .62s var(--ease),transform .62s var(--ease),filter .62s var(--ease);
+}
+.screen.is-hidden{opacity:0;pointer-events:none;transform:translateY(26px) scale(.985);filter:blur(6px)}
+
+/* ============================================================
+   3. LANDING
+   ============================================================ */
+#landing{display:flex;flex-direction:column;overflow:hidden}
+.landing-top{
+  position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;
+  padding:calc(22px + env(safe-area-inset-top)) clamp(20px,5vw,56px) 22px;
+  animation:fadeDown .9s var(--ease) both;
+}
+.brand{display:flex;align-items:center;gap:12px}
+.logo-mark{
+  width:42px;height:42px;border-radius:13px;display:grid;place-items:center;
+  background:linear-gradient(145deg,color-mix(in srgb,var(--teal) 26%,var(--surface2)),var(--surface2));
+  border:1px solid var(--line2);color:var(--teal);
+  box-shadow:0 8px 26px -12px color-mix(in srgb,var(--teal) 70%,transparent);
+}
+.logo-mark svg{width:22px;height:22px}
+.logo-text{display:flex;flex-direction:column;line-height:1.15}
+.logo-text b{font-family:var(--f-display);font-size:19px;font-weight:700;letter-spacing:-.01em}
+.logo-text span{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.ghost-btn{
+  font-size:13.5px;font-weight:600;color:var(--text);background:transparent;
+  border:1px solid var(--line2);padding:10px 20px;border-radius:99px;cursor:pointer;
+  transition:.3s var(--ease);
+}
+.ghost-btn:hover{background:var(--surface2);transform:translateY(-1px)}
+.ghost-btn:active{transform:scale(.98)}
+
+.slides{flex:1;overflow:hidden;position:relative;z-index:2}
+.track{display:flex;height:100%;transition:transform .95s cubic-bezier(.76,0,.24,1)}
+.slide{
+  flex:0 0 100%;height:100%;
+  display:grid;grid-template-columns:1.05fr .95fr;align-items:center;
+  gap:clamp(24px,5vw,70px);padding:0 clamp(22px,5vw,56px);
+  max-width:1240px;margin:0 auto;width:100%;
+}
+.slide-copy{opacity:0;transform:translateY(30px);transition:opacity .7s var(--ease) .18s,transform .7s var(--ease) .18s}
+.slide.is-active .slide-copy{opacity:1;transform:none}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;font-size:11px;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;
+}
+.eyebrow::before{content:'';width:26px;height:1px;background:var(--gold);opacity:.8}
+.slide h2{
+  font-family:var(--f-display);font-weight:600;font-size:clamp(32px,4.6vw,60px);
+  line-height:1.02;letter-spacing:-.028em;margin-bottom:20px;
+}
+.slide h2 em{font-style:italic;color:var(--gold)}
+.slide p{font-size:clamp(14.5px,1.15vw,16.5px);line-height:1.68;color:var(--muted);max-width:44ch;margin-bottom:26px}
+.ar-chip{
+  display:inline-flex;align-items:center;gap:14px;padding:13px 22px;border-radius:99px;
+  background:var(--surface);border:1px solid var(--line);
+  font-family:var(--f-ar);font-size:19px;font-weight:700;direction:rtl;
+  box-shadow:var(--shadow);
+}
+.ar-chip .dotlive{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:pulseDot 2.4s infinite}
+
+.slide-art{
+  position:relative;height:min(58vh,470px);width:100%;display:grid;place-items:center;
+  opacity:0;transform:scale(.9) translateY(26px);
+  transition:opacity .9s var(--ease) .1s,transform .9s var(--ease) .1s;
+}
+.slide.is-active .slide-art{opacity:1;transform:none}
+.orb{
+  position:absolute;width:min(40vh,340px);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 32% 28%,color-mix(in srgb,var(--teal) 30%,transparent),transparent 68%),
+             radial-gradient(circle at 72% 78%,color-mix(in srgb,var(--gold) 26%,transparent),transparent 66%);
+  filter:blur(14px);animation:floaty 9s ease-in-out infinite;
+}
+.orb-ring{position:absolute;width:min(46vh,392px);aspect-ratio:1;border-radius:50%;border:1px solid var(--line2)}
+.orb-ring::after{
+  content:'';position:absolute;inset:-1px;border-radius:50%;border:1px solid transparent;
+  border-top-color:color-mix(in srgb,var(--gold) 60%,transparent);animation:spin 14s linear infinite;
+}
+.orb-ring.r2{width:min(54vh,458px);opacity:.5}
+.orb-ring.r2::after{animation-duration:22s;animation-direction:reverse;border-top-color:color-mix(in srgb,var(--teal) 55%,transparent)}
+.float-card{
+  position:relative;z-index:2;width:min(310px,84%);
+  background:var(--glass);backdrop-filter:blur(20px) saturate(1.3);
+  border:1px solid var(--line2);border-radius:var(--r-lg);padding:24px 22px;
+  box-shadow:var(--shadow);animation:floaty 6.5s ease-in-out infinite;
+}
+.float-card .fc-ar{font-family:var(--f-ar);font-size:27px;font-weight:700;direction:rtl;line-height:1.5;margin-bottom:8px}
+.float-card .fc-tr{font-size:12.5px;color:var(--muted);font-style:italic;margin-bottom:4px}
+.float-card .fc-en{font-size:12.5px;color:var(--dim)}
+.fc-foot{display:flex;align-items:center;gap:10px;margin-top:18px;padding-top:15px;border-top:1px solid var(--line)}
+.wave{display:flex;align-items:center;gap:3px;height:22px}
+.wave i{display:block;width:3px;border-radius:3px;background:var(--teal);opacity:.8;animation:waveA 1.15s ease-in-out infinite}
+.wave i:nth-child(1){height:8px}
+.wave i:nth-child(2){height:16px;animation-delay:.12s}
+.wave i:nth-child(3){height:22px;animation-delay:.24s}
+.wave i:nth-child(4){height:13px;animation-delay:.36s}
+.wave i:nth-child(5){height:19px;animation-delay:.48s}
+.wave i:nth-child(6){height:9px;animation-delay:.6s}
+.fc-foot span{font-size:11px;color:var(--dim);letter-spacing:.04em;margin-left:auto}
+
+.landing-bottom{
+  position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:24px clamp(22px,5vw,56px) calc(34px + env(safe-area-inset-bottom));
+  animation:fadeUp 1s var(--ease) .2s both;
+}
+.dots{display:flex;gap:9px}
+.dots button{width:9px;height:9px;border-radius:50%;border:none;cursor:pointer;padding:0;background:var(--line2);transition:.4s var(--ease)}
+.dots button.on{width:30px;border-radius:99px;background:var(--gold)}
+
+.primary-btn{
+  font-size:14px;font-weight:600;color:#07110f;
+  background:linear-gradient(135deg,var(--teal),color-mix(in srgb,var(--teal) 55%,var(--sky)));
+  border:none;padding:14px 30px;border-radius:99px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:10px;
+  box-shadow:0 16px 38px -16px color-mix(in srgb,var(--teal) 90%,transparent);
+  transition:.34s var(--ease);
+}
+.primary-btn:hover{transform:translateY(-2px)}
+.primary-btn:active{transform:scale(.98)}
+.primary-btn svg{width:16px;height:16px;transition:transform .34s var(--ease)}
+.primary-btn:hover svg{transform:translateX(4px)}
+html[data-theme="light"] .primary-btn{color:#fff}
+
+/* ============================================================
+   4. AUTH
+   ============================================================ */
+#auth{display:grid;place-items:center;padding:24px;overflow-y:auto}
+.auth-card{
+  width:min(430px,100%);background:var(--glass);backdrop-filter:blur(24px) saturate(1.4);
+  border:1px solid var(--line2);border-radius:26px;padding:44px 36px 36px;text-align:center;
+  box-shadow:var(--shadow);animation:authIn .8s var(--spring) both;
+}
+.auth-card .logo-mark{width:58px;height:58px;border-radius:17px;margin:0 auto 22px}
+.auth-card .logo-mark svg{width:30px;height:30px}
+.auth-card h2{font-family:var(--f-display);font-size:29px;font-weight:600;letter-spacing:-.02em;margin-bottom:9px}
+.auth-card>p{font-size:13.5px;color:var(--muted);line-height:1.6;margin-bottom:30px}
+.oauth{
+  width:100%;display:flex;align-items:center;gap:13px;
+  font-size:14px;font-weight:600;color:var(--text);
+  background:var(--surface2);border:1px solid var(--line);
+  padding:14px 18px;border-radius:14px;cursor:pointer;margin-bottom:12px;
+  transition:.3s var(--ease);
+}
+.oauth:hover{background:var(--surface3);border-color:var(--line2);transform:translateY(-2px)}
+.oauth:active{transform:scale(.99)}
+.oauth svg{width:19px;height:19px;flex:none}
+.oauth .arrow{margin-left:auto;opacity:.35;transition:.3s var(--ease)}
+.oauth:hover .arrow{opacity:1;transform:translateX(3px)}
+.auth-divider{display:flex;align-items:center;gap:14px;margin:22px 0;color:var(--dim);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--line)}
+.fine{font-size:11.5px;color:var(--dim);line-height:1.6;margin-top:20px}
+
+/* ============================================================
+   5. APP SHELL
+   ============================================================ */
+#app{display:grid;grid-template-columns:264px 1fr;overflow:hidden}
+.sidebar{
+  position:relative;z-index:20;display:flex;flex-direction:column;gap:6px;
+  padding:calc(22px + env(safe-area-inset-top)) 14px calc(16px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg,var(--surface),var(--bg2));
+  border-right:1px solid var(--line);overflow-y:auto;
+}
+.sidebar .brand{padding:0 8px;margin-bottom:26px}
+.nav{display:flex;flex-direction:column;gap:3px}
+.nav-label{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);padding:16px 12px 8px}
+.nav-item{
+  position:relative;display:flex;align-items:center;gap:12px;
+  font-size:13.5px;font-weight:500;color:var(--muted);
+  background:transparent;border:none;cursor:pointer;text-align:left;
+  padding:11px 12px;border-radius:11px;transition:.28s var(--ease);
+}
+.nav-item svg{width:18px;height:18px;flex:none;opacity:.85;transition:.28s var(--ease)}
+.nav-item::before{
+  content:'';position:absolute;left:0;top:50%;translate:0 -50%;width:3px;height:0;
+  border-radius:0 3px 3px 0;background:var(--teal);transition:height .34s var(--ease);
+}
+.nav-item:hover{color:var(--text);background:var(--surface2)}
+.nav-item.is-active{color:var(--text);background:var(--surface2);font-weight:600}
+.nav-item.is-active svg{color:var(--teal);opacity:1}
+.nav-item.is-active::before{height:19px}
+.side-foot{margin-top:auto;padding-top:16px;display:flex;flex-direction:column;gap:8px}
+.user-chip{
+  display:flex;align-items:center;gap:11px;padding:10px;border-radius:13px;
+  background:var(--surface2);border:1px solid var(--line);
+}
+.avatar{
+  width:34px;height:34px;border-radius:11px;flex:none;display:grid;place-items:center;
+  font-size:13px;font-weight:700;color:#06110f;
+  background:linear-gradient(140deg,var(--teal),var(--gold));
+}
+html[data-theme="light"] .avatar{color:#fff}
+.user-chip .meta{min-width:0;line-height:1.3}
+.user-chip .meta b{display:block;font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.user-chip .meta span{display:block;font-size:10.5px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.main{overflow-y:auto;overflow-x:hidden;position:relative}
+.topbar{
+  position:sticky;top:0;z-index:15;display:flex;align-items:center;gap:16px;
+  padding:calc(13px + env(safe-area-inset-top)) clamp(18px,3vw,34px) 13px;
+  background:var(--glass);backdrop-filter:blur(20px) saturate(1.3);
+  border-bottom:1px solid var(--line);
+}
+.burger{
+  display:none;width:38px;height:38px;border-radius:11px;flex:none;
+  background:var(--surface2);border:1px solid var(--line);color:var(--text);
+  cursor:pointer;place-items:center;
+}
+.burger svg{width:18px;height:18px}
+.topbar h1{font-family:var(--f-display);font-size:20px;font-weight:600;letter-spacing:-.015em;line-height:1.15}
+.topbar .sub{font-size:11.5px;color:var(--dim);margin-top:2px}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.pill{
+  display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;color:var(--muted);
+  background:var(--surface2);border:1px solid var(--line);padding:8px 14px;border-radius:99px;white-space:nowrap;
+}
+.pill svg{width:13px;height:13px;color:var(--gold)}
+.icon-btn{
+  width:38px;height:38px;border-radius:11px;display:grid;place-items:center;
+  background:var(--surface2);border:1px solid var(--line);color:var(--muted);
+  cursor:pointer;transition:.28s var(--ease);
+}
+.icon-btn:hover{color:var(--text);border-color:var(--line2);transform:translateY(-1px)}
+.icon-btn svg{width:17px;height:17px}
+
+.view-wrap{padding:clamp(20px,3vw,32px) clamp(18px,3vw,34px) calc(70px + env(safe-area-inset-bottom));max-width:1100px;margin:0 auto}
+.view{display:none}
+.view.is-active{display:block;animation:viewIn .55s var(--ease) both}
+.section-title{
+  font-family:var(--f-display);font-size:17px;font-weight:600;letter-spacing:-.01em;
+  margin:34px 0 15px;display:flex;align-items:center;gap:11px;
+}
+.section-title::after{content:'';flex:1;height:1px;background:var(--line)}
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;overflow:hidden;display:grid;grid-template-columns:1fr auto;
+  align-items:center;gap:24px;padding:clamp(24px,3.4vw,38px);border-radius:var(--r-lg);
+  background:
+    radial-gradient(120% 150% at 88% 0%,color-mix(in srgb,var(--gold) 15%,transparent),transparent 62%),
+    linear-gradient(150deg,var(--surface2),var(--surface));
+  border:1px solid var(--line2);box-shadow:var(--shadow);
+}
+.hero::after{
+  content:'';position:absolute;right:-90px;bottom:-140px;width:300px;height:300px;border-radius:50%;
+  border:1px solid color-mix(in srgb,var(--teal) 22%,transparent);pointer-events:none;
+}
+.hero .eyebrow{margin-bottom:14px}
+.hero h2{font-family:var(--f-display);font-size:clamp(26px,3.1vw,38px);font-weight:600;letter-spacing:-.025em;line-height:1.1;margin-bottom:12px}
+.hero h2 .ar{font-family:var(--f-ar);direction:rtl;unicode-bidi:plaintext}
+.hero p{font-size:13.5px;color:var(--muted);line-height:1.65;max-width:42ch;margin-bottom:22px}
+.hero-art{
+  width:clamp(90px,13vw,140px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;flex:none;
+  background:radial-gradient(circle at 34% 30%,color-mix(in srgb,var(--teal) 30%,transparent),transparent 70%);
+  border:1px solid var(--line2);position:relative;
+}
+.hero-art svg{width:46%;height:46%;color:var(--teal)}
+.hero-art::before{
+  content:'';position:absolute;inset:-14px;border-radius:50%;
+  border:1px dashed color-mix(in srgb,var(--gold) 28%,transparent);animation:spin 26s linear infinite;
+}
+
+/* ---------- stats ---------- */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:14px}
+.stat{padding:18px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);transition:.32s var(--ease)}
+.stat:hover{border-color:var(--line2);transform:translateY(-2px)}
+.stat .k{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:9px}
+.stat .v{font-family:var(--f-display);font-size:27px;font-weight:600;letter-spacing:-.02em;line-height:1}
+.stat .v small{font-family:var(--f-ui);font-size:12px;font-weight:600;color:var(--muted);margin-left:3px}
+.stat .bar{margin-top:12px}
+.bar{height:6px;border-radius:99px;background:color-mix(in srgb,var(--text) 8%,transparent);overflow:hidden}
+.bar>i{display:block;height:100%;border-radius:99px;width:0;background:linear-gradient(90deg,var(--teal),var(--sky));transition:width 1s var(--ease) .15s}
+
+/* ---------- lessons ---------- */
+.lesson-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.lesson{
+  text-align:left;color:inherit;cursor:pointer;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r);padding:14px;transition:.34s var(--ease);
+  animation:cardIn .55s var(--ease) both;animation-delay:var(--d,0ms);
+}
+.lesson:hover{transform:translateY(-4px);border-color:var(--line2);box-shadow:0 22px 46px -28px rgba(0,0,0,.9)}
+.lesson-art{
+  height:118px;border-radius:12px;display:grid;place-items:center;position:relative;overflow:hidden;
+  background:
+    radial-gradient(120% 130% at 18% 0%,color-mix(in srgb,var(--h) 30%,transparent),transparent 62%),
+    linear-gradient(158deg,color-mix(in srgb,var(--h) 10%,var(--surface2)),var(--surface2));
+  border:1px solid var(--line);
+}
+.lesson-art svg{width:46px;height:46px;color:var(--h);transition:.4s var(--spring)}
+.lesson:hover .lesson-art svg{transform:scale(1.1) rotate(-4deg)}
+.lesson-art::after{
+  content:'';position:absolute;right:-42px;bottom:-52px;width:130px;height:130px;border-radius:50%;
+  border:1px solid color-mix(in srgb,var(--h) 30%,transparent);
+}
+.lesson-body{padding:13px 4px 4px}
+.lesson-top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.lesson-top h3{font-size:14px;font-weight:600;letter-spacing:-.01em;flex:1}
+.tag{
+  font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 9px;border-radius:99px;background:color-mix(in srgb,var(--h) 16%,transparent);
+  color:var(--h);border:1px solid color-mix(in srgb,var(--h) 26%,transparent);white-space:nowrap;
+}
+.lesson .ar-sm{font-family:var(--f-ar);font-size:14px;color:var(--muted);direction:rtl;margin-bottom:9px}
+.lesson p{font-size:11.5px;color:var(--dim);line-height:1.55;margin-bottom:12px}
+.lesson-foot{display:flex;align-items:center;gap:10px}
+.lesson-foot .bar{flex:1}
+.lesson-foot span{font-size:10.5px;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* ---------- phrase of day ---------- */
+.potd{
+  display:grid;grid-template-columns:1fr auto;align-items:center;gap:20px;padding:24px;border-radius:var(--r-lg);
+  background:linear-gradient(150deg,var(--surface2),var(--surface));border:1px solid var(--line);
+}
+.potd .ar{font-family:var(--f-ar);font-size:clamp(24px,3vw,32px);font-weight:700;direction:rtl;line-height:1.5;margin-bottom:8px}
+.potd .tr{font-size:12.5px;font-style:italic;color:var(--muted);margin-bottom:4px}
+.potd .en{font-size:12.5px;color:var(--dim)}
+
+.play-btn{
+  width:46px;height:46px;flex:none;border-radius:50%;display:grid;place-items:center;cursor:pointer;
+  background:color-mix(in srgb,var(--teal) 16%,transparent);
+  border:1px solid color-mix(in srgb,var(--teal) 34%,transparent);color:var(--teal);
+  transition:.3s var(--ease);
+}
+.play-btn:hover{background:color-mix(in srgb,var(--teal) 28%,transparent);transform:scale(1.07)}
+.play-btn:active{transform:scale(.94)}
+.play-btn svg{width:17px;height:17px;margin-left:2px}
+.play-btn.is-playing{animation:pulseRing .8s ease-out}
+
+/* ---------- chips ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.chip{
+  font-size:12.5px;font-weight:500;color:var(--muted);background:var(--surface);
+  border:1px solid var(--line);padding:8px 16px;border-radius:99px;cursor:pointer;transition:.28s var(--ease);
+}
+.chip:hover{color:var(--text);border-color:var(--line2)}
+.chip.on{background:color-mix(in srgb,var(--teal) 16%,transparent);border-color:color-mix(in srgb,var(--teal) 40%,transparent);color:var(--teal);font-weight:600}
+
+/* ---------- phrasebook ---------- */
+.phrase-list{display:grid;gap:9px}
+.phrase-card{
+  display:flex;align-items:center;gap:15px;padding:15px 16px;border-radius:var(--r);
+  background:var(--surface);border:1px solid var(--line);transition:.3s var(--ease);
+  animation:cardIn .5s var(--ease) both;animation-delay:var(--d,0ms);
+}
+.phrase-card:hover{transform:translateX(3px);border-color:var(--line2);background:var(--surface2)}
+.phrase-ic{
+  width:42px;height:42px;border-radius:12px;flex:none;display:grid;place-items:center;
+  background:color-mix(in srgb,var(--h) 14%,transparent);color:var(--h);
+  border:1px solid color-mix(in srgb,var(--h) 22%,transparent);
+}
+.phrase-ic svg{width:21px;height:21px}
+.phrase-body{flex:1;min-width:0}
+.phrase-ar{font-family:var(--f-ar);font-size:19px;font-weight:700;direction:rtl;line-height:1.5}
+.phrase-tr{font-size:11.5px;font-style:italic;color:var(--muted);margin-top:2px}
+.phrase-en{font-size:11.5px;color:var(--dim);margin-top:1px}
+
+/* ============================================================
+   6. AI CHAT
+   ============================================================ */
+.chat-shell{display:grid;gap:14px;max-width:820px}
+.tutor-picker{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tutor{
+  display:flex;align-items:center;gap:12px;text-align:left;color:inherit;cursor:pointer;
+  padding:14px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);
+  transition:.32s var(--ease);
+}
+.tutor:hover{border-color:var(--line2);transform:translateY(-2px)}
+.tutor.on{
+  border-color:color-mix(in srgb,var(--h) 52%,transparent);
+  background:color-mix(in srgb,var(--h) 10%,var(--surface));
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--h) 12%,transparent);
+}
+.tutor-av{
+  width:44px;height:44px;border-radius:50%;flex:none;display:grid;place-items:center;
+  font-family:var(--f-ar);font-size:17px;font-weight:700;color:#07110f;position:relative;
+  background:linear-gradient(145deg,var(--h),color-mix(in srgb,var(--h) 45%,var(--surface3)));
+}
+html[data-theme="light"] .tutor-av{color:#fff}
+.tutor.on .tutor-av::after{
+  content:'';position:absolute;inset:-4px;border-radius:50%;
+  border:1.5px solid color-mix(in srgb,var(--h) 65%,transparent);animation:pulseRing 2s infinite;
+}
+.tutor .t-name{font-size:13.5px;font-weight:600;line-height:1.3}
+.tutor .t-role{font-size:10.5px;color:var(--dim);margin-top:1px}
+.tutor .t-check{margin-left:auto;color:var(--h);opacity:0;transition:.3s var(--ease)}
+.tutor.on .t-check{opacity:1}
+.tutor .t-check svg{width:16px;height:16px}
+
+.chat-window{
+  height:min(50vh,450px);overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:16px;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);scroll-behavior:smooth;
+}
+.msg{display:flex;gap:11px;max-width:88%;animation:msgIn .45s var(--ease) both}
+.msg--user{margin-left:auto;flex-direction:row-reverse}
+.msg-av{
+  width:32px;height:32px;border-radius:50%;flex:none;display:grid;place-items:center;
+  font-family:var(--f-ar);font-size:12px;font-weight:700;color:#07110f;
+  background:linear-gradient(145deg,var(--h,var(--teal)),color-mix(in srgb,var(--h,var(--teal)) 45%,var(--surface3)));
+}
+html[data-theme="light"] .msg-av{color:#fff}
+.bubble{padding:13px 16px;border-radius:16px;background:var(--surface2);border:1px solid var(--line);border-top-left-radius:5px}
+.msg--user .bubble{
+  background:linear-gradient(140deg,color-mix(in srgb,var(--teal) 22%,var(--surface2)),color-mix(in srgb,var(--teal) 10%,var(--surface2)));
+  border-color:color-mix(in srgb,var(--teal) 26%,transparent);
+  border-top-left-radius:16px;border-top-right-radius:5px;font-size:13.5px;line-height:1.55;
+}
+.m-ar{font-family:var(--f-ar);font-size:19px;font-weight:700;direction:rtl;line-height:1.62;margin-bottom:7px}
+.m-tr{font-size:11.5px;font-style:italic;color:var(--muted);line-height:1.5}
+.m-en{font-size:11.5px;color:var(--dim);margin-top:3px;line-height:1.5}
+.m-play{
+  display:inline-flex;align-items:center;gap:6px;margin-top:11px;font-size:11px;font-weight:600;color:var(--teal);
+  background:color-mix(in srgb,var(--teal) 12%,transparent);
+  border:1px solid color-mix(in srgb,var(--teal) 24%,transparent);
+  padding:5px 12px;border-radius:99px;cursor:pointer;transition:.25s var(--ease);
+}
+.m-play:hover{background:color-mix(in srgb,var(--teal) 22%,transparent)}
+.m-play svg{width:11px;height:11px}
+.typing{display:flex;gap:4px;padding:6px 2px}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--dim);animation:typing 1.3s infinite}
+.typing i:nth-child(2){animation-delay:.18s}
+.typing i:nth-child(3){animation-delay:.36s}
+
+.suggestions{display:flex;gap:7px;flex-wrap:wrap}
+.sugg{
+  font-size:11.5px;color:var(--muted);cursor:pointer;background:var(--surface);
+  border:1px solid var(--line);padding:7px 13px;border-radius:99px;transition:.26s var(--ease);
+}
+.sugg:hover{color:var(--teal);border-color:color-mix(in srgb,var(--teal) 40%,transparent);transform:translateY(-1px)}
+
+.composer{
+  display:flex;align-items:center;gap:9px;padding:9px;border-radius:var(--r-lg);
+  background:var(--surface);border:1px solid var(--line);transition:.3s var(--ease);
+}
+.composer:focus-within{border-color:color-mix(in srgb,var(--teal) 42%,transparent)}
+.composer input{
+  flex:1;min-width:0;font-family:inherit;font-size:13.5px;color:var(--text);
+  background:transparent;border:none;outline:none;padding:8px 10px;
+}
+.composer input::placeholder{color:var(--dim)}
+.mic{
+  width:42px;height:42px;border-radius:50%;flex:none;display:grid;place-items:center;
+  background:var(--surface2);border:1px solid var(--line);color:var(--muted);cursor:pointer;transition:.3s var(--ease);
+}
+.mic:hover{color:var(--teal);border-color:color-mix(in srgb,var(--teal) 40%,transparent)}
+.mic svg{width:17px;height:17px}
+.mic.is-listening{color:#fff;background:var(--rose);border-color:var(--rose);animation:pulseRing 1.2s infinite}
+.send{
+  width:42px;height:42px;border-radius:50%;flex:none;display:grid;place-items:center;
+  background:linear-gradient(140deg,var(--teal),var(--sky));color:#06110f;border:none;cursor:pointer;transition:.3s var(--ease);
+}
+html[data-theme="light"] .send{color:#fff}
+.send:hover{transform:scale(1.06)}
+.send:active{transform:scale(.94)}
+.send svg{width:17px;height:17px}
+
+/* ============================================================
+   7. PROGRESS
+   ============================================================ */
+.chart{
+  display:flex;align-items:flex-end;gap:clamp(8px,2vw,20px);height:190px;padding:20px;
+  border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--line);
+}
+.chart .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:10px;height:100%}
+.chart .stem{flex:1;width:100%;display:flex;align-items:flex-end;background:color-mix(in srgb,var(--text) 5%,transparent);border-radius:9px;overflow:hidden}
+.chart .stem i{
+  display:block;width:100%;height:0;border-radius:9px;
+  background:linear-gradient(180deg,var(--teal),color-mix(in srgb,var(--teal) 40%,transparent));
+  transition:height 1s var(--ease) var(--d,0ms);
+}
+.chart .col.today .stem i{background:linear-gradient(180deg,var(--gold),color-mix(in srgb,var(--gold) 40%,transparent))}
+.chart .lbl{font-size:10.5px;font-weight:600;color:var(--dim);letter-spacing:.06em}
+.chart .col.today .lbl{color:var(--gold)}
+.skill{margin-bottom:18px}
+.skill-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px}
+.skill-top b{font-size:13px;font-weight:600}
+.skill-top span{font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* ============================================================
+   8. SETTINGS
+   ============================================================ */
+.set-card{padding:20px;border-radius:var(--r);margin-bottom:12px;background:var(--surface);border:1px solid var(--line)}
+.set-row{display:flex;align-items:center;gap:16px;justify-content:space-between;flex-wrap:wrap}
+.set-row .info{min-width:0}
+.set-row .info b{display:block;font-size:13.5px;font-weight:600;margin-bottom:3px}
+.set-row .info span{display:block;font-size:11.5px;color:var(--dim);line-height:1.5;max-width:52ch}
+.seg{display:flex;gap:4px;padding:4px;border-radius:12px;background:var(--surface2);border:1px solid var(--line)}
+.seg button{
+  font-size:12px;font-weight:600;color:var(--muted);background:transparent;border:none;cursor:pointer;
+  padding:8px 16px;border-radius:9px;display:inline-flex;align-items:center;gap:7px;transition:.28s var(--ease);
+}
+.seg button svg{width:14px;height:14px}
+.seg button.on{background:var(--surface3);color:var(--text);box-shadow:0 4px 14px -6px rgba(0,0,0,.6)}
+html[data-theme="light"] .seg button.on{background:#fff;box-shadow:0 4px 14px -8px rgba(70,58,35,.4)}
+input[type="range"]{
+  -webkit-appearance:none;appearance:none;width:160px;height:5px;border-radius:99px;
+  background:color-mix(in srgb,var(--text) 12%,transparent);outline:none;cursor:pointer;
+}
+input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:var(--teal);
+  border:2px solid var(--bg);cursor:pointer;box-shadow:0 0 0 4px color-mix(in srgb,var(--teal) 18%,transparent);
+}
+input[type="range"]::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:var(--teal);border:2px solid var(--bg);cursor:pointer}
+.switch{
+  width:48px;height:27px;border-radius:99px;flex:none;position:relative;cursor:pointer;
+  background:color-mix(in srgb,var(--text) 14%,transparent);border:1px solid var(--line);
+  transition:.32s var(--ease);padding:0;
+}
+.switch::after{
+  content:'';position:absolute;top:2.5px;left:2.5px;width:20px;height:20px;border-radius:50%;
+  background:#fff;transition:.32s var(--spring);box-shadow:0 2px 6px rgba(0,0,0,.35);
+}
+.switch.on{background:var(--teal);border-color:var(--teal)}
+.switch.on::after{transform:translateX(21px)}
+.danger-btn{
+  font-size:12.5px;font-weight:600;color:var(--rose);cursor:pointer;
+  background:color-mix(in srgb,var(--rose) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--rose) 30%,transparent);
+  padding:10px 18px;border-radius:11px;transition:.28s var(--ease);
+}
+.danger-btn:hover{background:color-mix(in srgb,var(--rose) 20%,transparent);transform:translateY(-1px)}
+.voice-note{display:flex;align-items:center;gap:9px;margin-top:14px;font-size:11.5px;color:var(--dim)}
+.voice-note .dot{width:7px;height:7px;border-radius:50%;background:var(--dim);flex:none}
+.voice-note.ok .dot{background:var(--teal);box-shadow:0 0 0 4px color-mix(in srgb,var(--teal) 15%,transparent)}
+.voice-note.warn .dot{background:var(--gold);box-shadow:0 0 0 4px color-mix(in srgb,var(--gold) 15%,transparent)}
+
+/* ============================================================
+   9. TOAST
+   ============================================================ */
+#toast{
+  position:fixed;left:50%;bottom:calc(26px + env(safe-area-inset-bottom));translate:-50% 0;z-index:200;
+  display:flex;align-items:center;gap:10px;font-size:12.5px;font-weight:500;
+  padding:12px 20px;border-radius:99px;background:var(--surface3);border:1px solid var(--line2);
+  color:var(--text);box-shadow:var(--shadow);max-width:min(90vw,420px);
+  opacity:0;pointer-events:none;transform:translateY(16px);
+  transition:.42s var(--spring);
+}
+#toast.show{opacity:1;transform:translateY(0)}
+#toast .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);flex:none}
+
+/* ============================================================
+   10. KEYFRAMES
+   ============================================================ */
+@keyframes fadeDown{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes msgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes viewIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes authIn{from{opacity:0;transform:translateY(40px) scale(.94)}to{opacity:1;transform:none}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes waveA{0%,100%{transform:scaleY(.45);opacity:.55}50%{transform:scaleY(1);opacity:1}}
+@keyframes pulseDot{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--teal) 60%,transparent)}70%{box-shadow:0 0 0 9px transparent}100%{box-shadow:0 0 0 0 transparent}}
+@keyframes pulseRing{0%{box-shadow:0 0 0 0 color-mix(in srgb,currentColor 45%,transparent)}70%{box-shadow:0 0 0 14px transparent}100%{box-shadow:0 0 0 0 transparent}}
+@keyframes typing{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
+
+/* ============================================================
+   11. RESPONSIVE
+   ============================================================ */
+@media (max-width:1000px){
+  .slide{grid-template-columns:1fr;gap:26px;padding-top:10px;align-content:center}
+  .slide-art{height:min(34vh,290px);order:-1}
+  .orb,.orb-ring{display:none}
+  .float-card{width:min(320px,90%)}
+}
+@media (max-width:880px){
+  #app{grid-template-columns:1fr}
+  .sidebar{
+    position:fixed;inset:0 auto 0 0;width:272px;z-index:60;
+    transform:translateX(-102%);transition:transform .45s var(--ease);
+    box-shadow:0 0 80px rgba(0,0,0,.6);
+  }
+  .sidebar.is-open{transform:none}
+  .burger{display:grid}
+  .scrim{
+    position:fixed;inset:0;z-index:55;background:rgba(0,0,0,.55);
+    backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:.35s ease;
+  }
+  .scrim.show{opacity:1;pointer-events:auto}
+}
+@media (max-width:620px){
+  .hero{grid-template-columns:1fr}
+  .hero-art{display:none}
+  .potd{grid-template-columns:1fr}
+  .tutor-picker{grid-template-columns:1fr}
+  .topbar .pill{display:none}
+  .msg{max-width:94%}
+  .landing-bottom{flex-direction:column-reverse;align-items:stretch;gap:16px}
+  .landing-bottom .primary-btn{justify-content:center}
+  .dots{justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════ LANDING ══════════════════════ -->
+<div class="screen" id="landing">
+  <header class="landing-top">
+    <div class="brand">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 18c0-6 3-9 8-9s8 3 8 9"/><path d="M12 9V4"/><circle cx="12" cy="3" r="1.2"/><path d="M7 18h10"/>
+        </svg>
+      </div>
+      <div class="logo-text"><b>Nile</b><span>Egyptian Arabic</span></div>
+    </div>
+    <button class="ghost-btn" id="topSignIn">Sign in</button>
+  </header>
+
+  <div class="slides">
+    <div class="track" id="track">
+      <section class="slide is-active">
+        <div class="slide-copy">
+          <div class="eyebrow">01 — Speak</div>
+          <h2>Sound Egyptian,<br>not <em>textbook</em>.</h2>
+          <p>Every phrase is voiced by a native Cairene speaker, so you pick up the rhythm of the street, the clinic and the campus — not the news bulletin.</p>
+          <div class="ar-chip"><span class="dotlive"></span>اتكلم مصري</div>
+        </div>
+        <div class="slide-art">
+          <div class="orb"></div><div class="orb-ring"></div><div class="orb-ring r2"></div>
+          <div class="float-card">
+            <div class="fc-ar" dir="rtl">إزيك يا دكتور؟</div>
+            <div class="fc-tr">Ezzayyak ya doktor?</div>
+            <div class="fc-en">How are you, doctor?</div>
+            <div class="fc-foot">
+              <div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <span>Tap to hear</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="slide-copy">
+          <div class="eyebrow">02 — Practise</div>
+          <h2>A tutor who<br><em>never sleeps</em>.</h2>
+          <p>Chat with Karim or Nour — two AI tutors who speak real Egyptian Arabic. Type or use your voice, and hear every reply spoken back to you.</p>
+          <div class="ar-chip"><span class="dotlive"></span>اتعلم مع مدرس</div>
+        </div>
+        <div class="slide-art">
+          <div class="orb"></div><div class="orb-ring"></div><div class="orb-ring r2"></div>
+          <div class="float-card">
+            <div class="fc-ar" dir="rtl">عايز تتدرب معايا؟</div>
+            <div class="fc-tr">ʿAyez tetdarrab maʿaya?</div>
+            <div class="fc-en">Do you want to practise with me?</div>
+            <div class="fc-foot">
+              <div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <span>Live AI chat</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="slide-copy">
+          <div class="eyebrow">03 — Belong</div>
+          <h2>Built for<br><em>medical students</em>.</h2>
+          <p>From patient history to the pharmacy down the road. Lessons shaped around the words you actually need in an Egyptian hospital.</p>
+          <div class="ar-chip"><span class="dotlive"></span>لطلبة الطب</div>
+        </div>
+        <div class="slide-art">
+          <div class="orb"></div><div class="orb-ring"></div><div class="orb-ring r2"></div>
+          <div class="float-card">
+            <div class="fc-ar" dir="rtl">إيه اللي بيوجعك؟</div>
+            <div class="fc-tr">Eh elli beywaggaʿak?</div>
+            <div class="fc-en">What is hurting you?</div>
+            <div class="fc-foot">
+              <div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <span>Clinic ready</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="landing-bottom">
+    <div class="dots" id="dots"></div>
+    <button class="primary-btn" id="getStarted">
+      Get started
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════ AUTH ══════════════════════ -->
+<div class="screen is-hidden" id="auth">
+  <div class="auth-card">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 18c0-6 3-9 8-9s8 3 8 9"/><path d="M12 9V4"/><circle cx="12" cy="3" r="1.2"/><path d="M7 18h10"/>
+      </svg>
+    </div>
+    <h2>Welcome to Nile</h2>
+    <p>Sign in to keep your streak, your lessons<br>and your tutor conversations in sync.</p>
+
+    <button class="oauth" data-provider="google">
+      <svg viewBox="0 0 24 24">
+        <path fill="#4285F4" d="M23 12.2c0-.8-.1-1.6-.2-2.3H12v4.5h6.2a5.3 5.3 0 0 1-2.3 3.5v2.9h3.7c2.1-2 3.4-4.9 3.4-8.6z"/>
+        <path fill="#34A853" d="M12 24c3.1 0 5.7-1 7.6-2.8l-3.7-2.9c-1 .7-2.3 1.1-3.9 1.1-3 0-5.5-2-6.4-4.7H1.8v3A12 12 0 0 0 12 24z"/>
+        <path fill="#FBBC05" d="M5.6 14.7a7.2 7.2 0 0 1 0-4.6v-3H1.8a12 12 0 0 0 0 10.6l3.8-3z"/>
+        <path fill="#EA4335" d="M12 4.8c1.7 0 3.2.6 4.4 1.7l3.3-3.3A11.6 11.6 0 0 0 12 0 12 12 0 0 0 1.8 6.1l3.8 3C6.5 6.3 9 4.8 12 4.8z"/>
+      </svg>
+      Continue with Google
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+    </button>
+
+    <button class="oauth" data-provider="microsoft">
+      <svg viewBox="0 0 24 24">
+        <path fill="#F25022" d="M2 2h9.5v9.5H2z"/>
+        <path fill="#7FBA00" d="M12.5 2H22v9.5h-9.5z"/>
+        <path fill="#00A4EF" d="M2 12.5h9.5V22H2z"/>
+        <path fill="#FFB900" d="M12.5 12.5H22V22h-9.5z"/>
+      </svg>
+      Continue with Microsoft
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+    </button>
+
+    <div class="auth-divider">or</div>
+    <button class="ghost-btn" id="guestBtn" style="width:100%;padding:13px">Continue as guest</button>
+    <p class="fine">Demo experience — no account is created and nothing leaves your device.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════ APP ══════════════════════ -->
+<div class="screen is-hidden" id="app">
+  <div class="scrim" id="scrim"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 18c0-6 3-9 8-9s8 3 8 9"/><path d="M12 9V4"/><circle cx="12" cy="3" r="1.2"/><path d="M7 18h10"/>
+        </svg>
+      </div>
+      <div class="logo-text"><b>Nile</b><span>Egyptian Arabic</span></div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-label">Learn</div>
+      <button class="nav-item is-active" data-view="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7"/><path d="M5 9v11h14V9"/><path d="M9 20v-6h6v6"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-item" data-view="lessons">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v18H6.5A2.5 2.5 0 0 0 4 23z"/><path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H13v18h4.5A2.5 2.5 0 0 1 20 23z"/></svg>
+        Lessons
+      </button>
+      <button class="nav-item" data-view="phrases">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.5 9.5 0 0 1-3.9-.9L3 21l1.9-5A8.3 8.3 0 0 1 4 11.5a8.4 8.4 0 0 1 8.5-8.4 8.4 8.4 0 0 1 8.5 8.4z"/></svg>
+        Phrasebook
+      </button>
+
+      <div class="nav-label">Practice</div>
+      <button class="nav-item" data-view="aichat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><path d="M12 18v4"/><path d="M8 22h8"/></svg>
+        AI Tutor
+      </button>
+      <button class="nav-item" data-view="progress">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><rect x="5" y="12" width="3.5" height="8" rx="1"/><rect x="10.2" y="7" width="3.5" height="13" rx="1"/><rect x="15.5" y="3" width="3.5" height="17" rx="1"/></svg>
+        Progress
+      </button>
+    </nav>
+
+    <div class="side-foot">
+      <button class="nav-item" data-view="settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg>
+        Settings
+      </button>
+      <div class="user-chip">
+        <div class="avatar" id="sideAvatar">O</div>
+        <div class="meta"><b id="sideName">Omar Farouk</b><span id="sideEmail">omar@gmail.com</span></div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main" id="main">
+    <header class="topbar">
+      <button class="burger" id="burger" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <div>
+        <h1 id="viewTitle">Dashboard</h1>
+        <div class="sub" id="viewSub">Your Egyptian Arabic journey</div>
+      </div>
+      <div class="topbar-right">
+        <span class="pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s5 4.5 5 9a5 5 0 0 1-10 0c0-4.5 5-9 5-9z"/></svg>
+          <span>7 day streak</span>
+        </span>
+        <button class="icon-btn" id="quickTheme" aria-label="Toggle theme">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M12 19v2M5 12H3M21 12h-2M6.3 6.3 4.9 4.9M19.1 19.1l-1.4-1.4M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"/><circle cx="12" cy="12" r="4"/></svg>
+        </button>
+        <div class="avatar" id="topAvatar">O</div>
+      </div>
+    </header>
+
+    <div class="view-wrap">
+
+      <!-- DASHBOARD -->
+      <section class="view is-active" data-view="dashboard">
+        <div class="hero">
+          <div>
+            <div class="eyebrow">Good evening</div>
+            <h2>أهلاً بيك، <span class="ar" id="heroName">عمر</span></h2>
+            <p>You're <b>3 phrases</b> away from today's goal. Karim is online and waiting to practise the clinic dialogue with you.</p>
+            <button class="primary-btn" data-go="aichat">
+              Practise with a tutor
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            </button>
+          </div>
+          <div class="hero-art">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/>
+              <path d="M19 10v1a7 7 0 0 1-14 0v-1"/><path d="M12 18v4"/><path d="M8 22h8"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat"><div class="k">Streak</div><div class="v">7<small>days</small></div><div class="bar"><i style="width:70%"></i></div></div>
+          <div class="stat"><div class="k">Phrases learned</div><div class="v">128<small>/ 240</small></div><div class="bar"><i style="width:53%"></i></div></div>
+          <div class="stat"><div class="k">Minutes this week</div><div class="v">94<small>min</small></div><div class="bar"><i style="width:62%"></i></div></div>
+        </div>
+
+        <h2 class="section-title">Continue learning</h2>
+        <div class="lesson-grid" id="dashLessons"></div>
+
+        <h2 class="section-title">Phrase of the day</h2>
+        <div class="potd" id="potd"></div>
+      </section>
+
+      <!-- LESSONS -->
+      <section class="view" data-view="lessons">
+        <div class="chips" id="lessonChips">
+          <button class="chip on" data-level="all">All levels</button>
+          <button class="chip" data-level="Beginner">Beginner</button>
+          <button class="chip" data-level="Intermediate">Intermediate</button>
+          <button class="chip" data-level="Advanced">Advanced</button>
+        </div>
+        <div class="lesson-grid" id="lessonGrid"></div>
+      </section>
+
+      <!-- PHRASEBOOK -->
+      <section class="view" data-view="phrases">
+        <div class="chips" id="phraseChips">
+          <button class="chip on" data-cat="all">All phrases</button>
+          <button class="chip" data-cat="greetings">Greetings</button>
+          <button class="chip" data-cat="clinic">Clinic</button>
+          <button class="chip" data-cat="campus">Campus</button>
+          <button class="chip" data-cat="food">Food</button>
+          <button class="chip" data-cat="transport">Transport</button>
+          <button class="chip" data-cat="shopping">Shopping</button>
+        </div>
+        <div class="phrase-list" id="phraseList"></div>
+      </section>
+
+      <!-- AI CHAT -->
+      <section class="view" data-view="aichat">
+        <div class="chat-shell">
+          <div class="tutor-picker" id="tutorPicker">
+            <button class="tutor on" data-persona="karim" style="--h:var(--teal)">
+              <div class="tutor-av">ك</div>
+              <div><div class="t-name">Karim</div><div class="t-role">Male tutor · Cairo</div></div>
+              <span class="t-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12 5 5L20 6"/></svg></span>
+            </button>
+            <button class="tutor" data-persona="nour" style="--h:var(--rose)">
+              <div class="tutor-av">ن</div>
+              <div><div class="t-name">Nour</div><div class="t-role">Female tutor · Alexandria</div></div>
+              <span class="t-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12 5 5L20 6"/></svg></span>
+            </button>
+          </div>
+
+          <div class="chat-window" id="chatWindow"></div>
+          <div class="suggestions" id="suggestions"></div>
+
+          <form class="composer" id="composer">
+            <button type="button" class="mic" id="micBtn" aria-label="Speak">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/>
+                <path d="M19 10v1a7 7 0 0 1-14 0v-1"/><path d="M12 18v4"/><path d="M8 22h8"/>
+              </svg>
+            </button>
+            <input id="chatInput" type="text" placeholder="Type in English or Arabic…" autocomplete="off" aria-label="Message">
+            <button class="send" type="submit" aria-label="Send">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg>
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- PROGRESS -->
+      <section class="view" data-view="progress">
+        <div class="stat-row">
+          <div class="stat"><div class="k">Day streak</div><div class="v">7<small>days</small></div></div>
+          <div class="stat"><div class="k">Total phrases</div><div class="v">128<small>/ 240</small></div></div>
+          <div class="stat"><div class="k">Lessons done</div><div class="v">3<small>/ 6</small></div></div>
+          <div class="stat"><div class="k">Accuracy</div><div class="v">86<small>%</small></div></div>
+        </div>
+        <h2 class="section-title">This week</h2>
+        <div class="chart" id="chart"></div>
+        <h2 class="section-title">Skill breakdown</h2>
+        <div id="skills"></div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section class="view" data-view="settings">
+        <div class="set-card">
+          <div class="set-row">
+            <div class="info">
+              <b>Appearance</b>
+              <span>Nile starts dark. Switch to a warm paper theme whenever you like.</span>
+            </div>
+            <div class="seg" id="themeSeg">
+              <button data-theme-btn="dark" class="on">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+                Dark
+              </button>
+              <button data-theme-btn="light">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M5 12H3M21 12h-2M6.3 6.3 4.9 4.9M19.1 19.1l-1.4-1.4M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"/></svg>
+                Light
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="set-card">
+          <div class="set-row">
+            <div class="info"><b>Speech speed</b><span>How fast the tutor and phrase audio is spoken.</span></div>
+            <div style="display:flex;align-items:center;gap:12px">
+              <input type="range" id="rateRange" min="0.6" max="1.2" step="0.05" value="0.95">
+              <b id="rateVal" style="font-size:12.5px;font-variant-numeric:tabular-nums;min-width:34px">0.95</b>
+            </div>
+          </div>
+          <div class="voice-note" id="voiceNote">
+            <span class="dot"></span><span id="voiceNoteText">Checking for Arabic voices…</span>
+          </div>
+        </div>
+
+        <div class="set-card">
+          <div class="set-row">
+            <div class="info"><b>Auto-speak tutor replies</b><span>Every reply from Karim or Nour is read out loud automatically.</span></div>
+            <button class="switch on" id="autoSpeakSwitch" aria-label="Toggle auto-speak"></button>
+          </div>
+        </div>
+
+        <div class="set-card">
+          <div class="set-row">
+            <div class="info"><b>Account</b><span id="accountLine">Signed in as Omar Farouk · omar@gmail.com</span></div>
+            <button class="danger-btn" id="signOutBtn">Sign out</button>
+          </div>
+        </div>
+
+        <div class="set-card">
+          <div class="set-row">
+            <div class="info"><b>Reset progress</b><span>Clears your streak, learned phrases and chat history from this device.</span></div>
+            <button class="danger-btn" id="resetBtn">Reset everything</button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<div id="toast"><span class="dot"></span><span id="toastText">Saved</span></div>
+
+<script>
+(function () {
+'use strict';
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+const $  = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const store = {
+  get(k, f) { try { const v = localStorage.getItem('nile.' + k); return v === null ? f : JSON.parse(v); } catch (e) { return f; } },
+  set(k, v) { try { localStorage.setItem('nile.' + k, JSON.stringify(v)); } catch (e) {} },
+  clear() { try { Object.keys(localStorage).filter(x => x.startsWith('nile.')).forEach(x => localStorage.removeItem(x)); } catch (e) {} }
+};
+
+let toastTimer;
+function toast(msg) {
+  $('#toastText').textContent = msg;
+  $('#toast').classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => $('#toast').classList.remove('show'), 2600);
+}
+
+/* ============================================================
+   STATE
+   ============================================================ */
+const state = {
+  theme: store.get('theme', 'dark'),
+  persona: store.get('persona', 'karim'),
+  autoSpeak: store.get('autoSpeak', true),
+  rate: store.get('rate', 0.95),
+  slide: 0,
+  level: 'all',
+  cat: 'all',
+  history: []
+};
+
+/* ============================================================
+   ILLUSTRATIONS (24×24, flat, inherit currentColor)
+   ============================================================ */
+const ART = {
+  clinic: '<rect x="3" y="3" width="18" height="18" rx="5.5" fill="currentColor" fill-opacity=".14" stroke="none"/><path d="M12 8v8M8 12h8"/>',
+  pharmacy: '<rect x="6.5" y="8" width="11" height="13" rx="3.5" fill="currentColor" fill-opacity=".14" stroke="none"/><path d="M9.5 8V5.2h5V8"/><path d="M12 12v4.5M9.8 14.3h4.4"/>',
+  campus: '<path d="M12 4 2.5 9 12 14l9.5-5z" fill="currentColor" fill-opacity=".14" stroke="none"/><path d="M12 4 2.5 9 12 14l9.5-5z"/><path d="M6.5 11.5V16c0 1.7 2.5 3 5.5 3s5.5-1.3 5.5-3v-4.5"/>',
+  food: '<path d="M3 12h18c0 4.5-4 8-9 8s-9-3.5-9-8z" fill="currentColor" fill-opacity=".14" stroke="none"/><path d="M3 12h18"/><path d="M9 8.5c0-1.6 1.6-1.6 1.6-3.2M14 8.5c0-1.6 1.6-1.6 1.6-3.2"/>',
+  transport: '<rect x="4" y="3.5" width="16" height="12.5" rx="3.5" fill="currentColor" fill-opacity=".14" stroke="none"/><path d="M4 10h16"/><circle cx="8" cy="18.5" r="1.6"/><circle cx="16" cy="18.5" r="1.6"/><path d="M8 6.8h8"/>',
+  ward: '<path d="M3 20V8"/><path d="M3 14h13a5 5 0 0 1 5 5"/><path d="M3 20h18"/><circle cx="7.5" cy="10.5" r="2"/>',
+  greetings: '<path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.5 9.5 0 0 1-3.9-.9L3 21l1.9-5A8.3 8.3 0 0 1 4 11.5a8.4 8.4 0 0 1 8.5-8.4 8.4 8.4 0 0 1 8.5 8.4z" fill="currentColor" fill-opacity=".12" stroke="none"/><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.5 9.5 0 0 1-3.9-.9L3 21l1.9-5A8.3 8.3 0 0 1 4 11.5a8.4 8.4 0 0 1 8.5-8.4 8.4 8.4 0 0 1 8.5 8.4z"/>',
+  shopping: '<path d="M4 9h16l-1.6 10.2A2 2 0 0 1 16.4 21H7.6a2 2 0 0 1-2-1.8L4 9z" fill="currentColor" fill-opacity=".14" stroke="none"/><path d="M4 9h16l-1.6 10.2A2 2 0 0 1 16.4 21H7.6a2 2 0 0 1-2-1.8L4 9z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/>',
+  speech: '<path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z" fill="currentColor" fill-opacity=".12" stroke="none"/><path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><path d="M12 18v4"/><path d="M8 22h8"/>'
+};
+const svg = key => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + (ART[key] || '') + '</svg>';
+
+/* ============================================================
+   DATA
+   ============================================================ */
+const LESSONS = [
+  { id:'l1', title:'At the Clinic',    ar:'في العيادة',  desc:'Symptoms, history taking and reassuring your patient.', level:'Beginner',     progress:80, art:'clinic',    hue:'var(--teal)'   },
+  { id:'l2', title:'The Pharmacy',     ar:'في الصيدلية', desc:'Dosages, timings and asking for alternatives.',         level:'Beginner',     progress:45, art:'pharmacy',  hue:'var(--violet)' },
+  { id:'l3', title:'Campus Life',      ar:'حياة الجامعة', desc:'Lectures, labs and finding your way around.',           level:'Intermediate', progress:20, art:'campus',    hue:'var(--gold)'   },
+  { id:'l4', title:'Ordering Food',    ar:'طلب الأكل',    desc:'Koshary, taʿmeya and everything in between.',           level:'Beginner',     progress:
